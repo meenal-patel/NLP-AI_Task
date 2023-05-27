@@ -1,0 +1,43 @@
+                                                   REPORT
+
+The algorithm described in the previous code example uses two pre-trained models from the Hugging Face library :
+
+1. DistilBERT: It is a distilled version of BERT (Bidirectional Encoder Representations from Transformers), which is a popular transformer-based model for natural language processing (NLP) tasks. DistilBERT is fine-tuned on a question classification task. Its purpose in this algorithm is to analyze and categorize the user's question into one of the predefined categories: company department, employee role, or company news.
+
+2. BERT (SQuAD): It is a variant of BERT that is fine-tuned on the Stanford Question Answering Dataset (SQuAD) task. This model is used to generate potential answers based on the retrieved information. It takes the user's question and the relevant context (category-specific information) as input and predicts the start and end positions of the answer span within the context.
+
+-----------------------------Here's an overview of the algorithm's logic and architecture:-----------------------------------------
+
+1. Load the pre-trained models and tokenizer: The DistilBERT model for question classification and the BERT model for question answering are loaded along with their respective tokenizers.
+
+2. Preprocess the user's question: The user's question is tokenized using the DistilBERT tokenizer to obtain input tensors for classification.
+
+3. Classify the question category: The preprocessed question is passed through the DistilBERT model, and the predicted label corresponds to one of the predefined categories: company department, employee role, or company news.
+
+4. Retrieve relevant information: Depending on the predicted category, relevant information is obtained from different sources:
+
+  -If the category is "company department," information can be retrieved from a CSV file containing department details.
+  -If the category is "employee role," information can be queried from an SQL database with employee details.
+  -If the category is "company news," an API request can be made to a news API to fetch the latest news.
+
+5. Preprocess the retrieved information and generate potential answer context: The retrieved information is preprocessed and used as context along with the user's question. Both the question and context are tokenized using the BERT tokenizer.
+
+6. Answer generation: The tokenized question and context are passed through the BERT model, and the model predicts the start and end positions of the answer span within the context. The predicted answer span is then converted back into a readable answer using the tokenizer.
+
+7. Return the response: The algorithm returns a JSON response containing the user's question, the predicted category, and the generated answer.
+
+This architecture leverages pre-trained models to perform question classification and question answering tasks, allowing the API to analyze and categorize questions and generate relevant answers based on the retrieved information.
+
+--------------------------------------------------Challenges faced--------------------------------------------------
+
+The major challenge I faced was during generating the API as initially it was not taking input in json format and i was getting INFO:     127.0.0.1:50258 - "GET /predict HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:50279 - "POST /predict HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:50282 - "POST /predict HTTP/1.1" 422 Unprocessable Entity error. then i used request module to request to perticular api. 
+also the API endpoint /predict is defined with the POST method. Therefore, I tried to use a POST request to the /predict endpoint to get a response.
+
+although I did not get the response from this API as I was not having the CSV files, News API's or SQL data server connected with the algorithm.
+
+
+
+
+

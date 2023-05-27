@@ -1,0 +1,52 @@
+                                               API Documentation 
+
+Endpoint: /predict
+Method: POST
+Content-Type: application/json
+
+Request Body:
+  .json file with this format:
+  {
+    "question": "Your question goes here"
+  }
+
+Example Request :
+  import requests
+
+  # API endpoint URL
+  url = "http://localhost:8000/predict"
+
+  # Read the input JSON file
+  with open("input.json", "r") as f:
+      json_data = f.read()
+
+  # Send the POST request
+  response = requests.post(url, json=json_data)
+
+  # Get the response JSON
+  output = response.json()
+
+  # Extract relevant information from the response
+  question = output["question"]
+  category = output["category"]
+  answer = output["answer"]
+
+  # Print the results
+  print("Question:", question)
+  print("Category:", category)
+  print("Answer:", answer)
+
+                 OR
+
+  curl -X POST -H "Content-Type: application/json" -d '{"question": "What is the latest company news?"}' http://localhost:8000/predict
+
+Example Response:
+  {
+    "question": "What is the latest company news?",
+    "category": "company news",
+    "answer": "The latest company news is about the launch of a new product line."
+  }
+
+
+
+
